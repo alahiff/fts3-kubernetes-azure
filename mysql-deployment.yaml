@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-fts3
+  labels:
+    name: mysql-fts3
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: mysql-fts3
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql-fts3
+  labels:
+    app: mysql-fts3
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql-fts3
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password.txt
+        - name: MYSQL_DATABASE
+          value: fts3
+        - name: MYSQL_USER
+          value: fts3
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass-fts3
+              key: password-fts3.txt
+        resources:
+          requests:
+            memory: "6.0Gi"
+            cpu: "3"
+          limits:
+            memory: "6.0Gi"
+            cpu: "3"
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
