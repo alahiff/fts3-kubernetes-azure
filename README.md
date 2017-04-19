@@ -43,6 +43,18 @@ po/mysql-fts3-414169266-xdfnq   1/1       Running   0          30m
 NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 deploy/mysql-fts3   1         1         1            1           30m
 ```
+We can easily check that MySQL is using a 100 GB disk, as we had specified in the persistent volume claim:
+```
+$ kubectl exec -it mysql-fts3-414169266-xdfnq -- /bin/df -h
+Filesystem      Size  Used Avail Use% Mounted on
+overlay          29G  4.8G   24G  17% /
+tmpfs           6.9G     0  6.9G   0% /dev
+tmpfs           6.9G     0  6.9G   0% /sys/fs/cgroup
+/dev/sda1        29G  4.8G   24G  17% /etc/hosts
+shm              64M     0   64M   0% /dev/shm
+/dev/sdc         99G  175M   94G   1% /var/lib/mysql
+tmpfs           6.9G   12K  6.9G   1% /run/secrets/kubernetes.io/serviceaccount
+```
 
 ## Deploying FTS3
 Create a secret containing a valid host certificate:
