@@ -65,6 +65,9 @@ secret "fts3-cert" created
 Before starting the FTS3 services we need to run a job which configures the database schema:
 ```
 ```
+We can now run the 3 pods running FTS3 services (server, REST API, web monitoring):
+```
+```
 
 ## References
 The following were helpful in preparing this:
