@@ -1,2 +1,1 @@
-# fts3-kubernetes-azure
-FTS3 running on Kubernetes on Azure
+# FTS3 on Kubernetes on Azure
