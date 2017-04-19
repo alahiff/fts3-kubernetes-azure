@@ -62,6 +62,9 @@ Create a secret containing a valid host certificate:
 $ kubectl create secret generic fts3-cert --from-file=hostcert=hostcert.pem --from-file=hostkey=hostkey.pem
 secret "fts3-cert" created
 ```
+Before starting the FTS3 services we need to run a job which configures the database schema:
+```
+```
 
 ## References
 The following were helpful in preparing this:
